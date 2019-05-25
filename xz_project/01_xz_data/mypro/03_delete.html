@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+ </head>
+ <body>
+	<input type="text" id='uid'>
+	<button onclick='deleteUser()'>删除</button>
+	<script>
+		function deleteUser(){
+			//获取uid
+			var u_id=uid.value;
+			
+			//1.获取异步对象
+			var xhr=new XMLHttpRequest();
+
+			//4.接收响应数据
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					console.log(result);
+					if(result==1){
+						alert('删除成功');
+					}else{
+						alert('删除失败');
+					}
+				}
+			}
+			//2.创建请求(字符串拼接)
+			xhr.open('get',"http://127.0.0.1:8080/pro/deleteUser?uid="+u_id,true);
+
+			//3.发送请求
+			xhr.send();
+			//在浏览器端访问 http://127.0.0.1:8080/03_delete.html
+		}
+	</script>
+ </body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+	<style>
+		#i1> span{
+		margin:0 auto;
+		}
+
+	/*--行内元素设置浮动后，会变成允许设置(宽高)，可以设置垂直外边距margin-top  */
+	a,span{
+	float:left;
+	}
+	/*	默认内外边距清零	*/
+		*{margin:0;padding:0}
+
+/*让每个input框距离大点	*/
+	input{
+	margin-top:15px;
+	width:200px;height:30px;
+	}
+
+/*让input框右对齐*/
+	#i1{
+		width:700px;
+		text-align:right;
+		margin-left:299px;
+		margin-top:60px;
+	}
+
+		p,a{
+			color:#fff;
+			font-size:12px;
+		}
+
+		.panel{
+		width:1300px;
+		height:560px;
+		background-color:rgba(0,0,0,0.2);
+		color:#fff;
+		font-size:18px;
+		background-image:url('bg.png');
+		}
+		p{
+		font-size:18px;
+		color:#fff;
+		padding-top:30px;
+		padding-left:15px;
+		margin-top:51px;
+		margin-left:108px;
+
+		}
+		#n1{
+		margin-left:608px;
+		margin-top:10px;
+		}
+		a{
+			text-decoration:none;
+			margin-left:243px;
+		}
+		#s1{
+		margin-top:10px;
+		margin-left:646px;
+		}
+		
+		#ds{
+			background-color:#27b0f6;
+		}
+	</style>
+ </head>
+
+ <body>
+  
+  <div class="panel">
+	<!-- 	防止外边距溢出 加一个空table	 -->
+	<table></table>
+
+
+	<div id='n1'>
+		<p>新用户注册</p>
+	</div>
+		<span id='s1'>
+			<a href='xuezi_login.html'>直接登录</a>
+		</span>
+		
+		<div id="i1">
+
+<!-- 	onblur 焦点移除事件(鼠标焦点移除) 显示不为空
+			onfocus  获取焦点事件 显示要输入的格式
+		 -->
+			用户名：<input onblur='notnull()' onfocus='show_uname_msg()' type="text" name='uname' id='uname' placeholder='请输入用户名'><br>
+			<span id='uname_msg'></span>
+
+			登录密码：<input onblur='notnull2()' onfocus='show_upwd_msg()' type="password" name='upwd' id='upwd' placeholder='请输入密码'><br>
+			<span id='upwd_msg'></span>
+
+			确认密码：<input onblur='notnull3()' onfocus='show_cpwd_msg()' type="password" name='cpwd' id='cpwd' placeholder='请确认密码'><br>
+			<span id='cpwd_msg'></span>
+
+			邮箱：<input onblur='notnull4()' onfocus='show_email_msg()' type="text" name='email' id='email' placeholder='请输入邮箱地址'><br>
+			<span id='email_msg'></span>
+
+			手机号：<input onblur='notnull5()' onfocus='show_phone_msg()' type="text" name='phone' id='phone' placeholder='请输入您的手机号'><br>
+			<span id='phone_msg'></span>
+
+			<button id='ds' onclick='register()'>提交注册信息</button>
+
+	</div>
+  </div>
+
+	<script>
+	//添加获取焦点及焦点移除方法
+		//onblur 焦点移除事件(鼠标焦点移除) 显示不为空
+		//onfocus  获取焦点事件 显示要输入的格式
+		//onblur='notnull()'   onfocus='show_uname_msg()
+
+		function show_uname_msg(){
+			uname_msg.innerHTML='用户名长度在6到9位之间'
+		}
+		function notnull(){
+			if(uname.value){
+				uname_msg.innerHTML='输入的用户名可用'
+			}else{
+				uname_msg.innerHTML='用户名不能为空'
+			}
+		}
+
+		function show_upwd_msg(){
+			upwd_msg.innerHTML='密码长度在6到12位之间'
+		}
+		function notnull2(){
+			if(uname.value){
+				upwd_msg.innerHTML='输入的密码可用'
+			}else{
+				upwd_msg.innerHTML='密码不能为空'
+			}
+		}
+
+		function show_cpwd_msg(){
+			cpwd_msg.innerHTML='密码长度在6到12位之间'
+		}
+		function notnull3(){
+			if(uname.value){
+				cpwd_msg.innerHTML='输入的密码可用'
+			}else{
+				cpwd_msg.innerHTML='确认密码不能为空'
+			}
+		}
+
+			function show_email_msg(){
+			email_msg.innerHTML='请输入合法的邮箱地址'
+		}
+		function notnull4(){
+			if(uname.value){
+				email_msg.innerHTML='输入的邮箱可用'
+			}else{
+				email_msg.innerHTML='邮箱不能为空'
+			}
+		}
+
+			function show_phone_msg(){
+			phone_msg.innerHTML='请输入合法的手机号'
+		}
+		function notnull5(){
+			if(uname.value){
+				phone_msg.innerHTML='输入的手机号可用'
+			}else{
+				phone_msg.innerHTML='手机号不能为空'
+			}
+		}
+
+
+
+	</script>
+
+<!-- 
+	<script>
+	
+		//2-1.添加查询用户名的方法(先查询再注册)
+		function query(){
+			//获取用户名
+			var urlParams=new URLSearchParams(location.search);
+			var in_uname=urlParams.get('uname');
+			//1.获取异步对象
+			var xhr=new XMLHttpRequest();
+
+			//4.接收响应数据
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					//json解析
+					var user=JOSON.parse(result);
+					console.log(user);
+					uname.value=user.name;
+				}
+			};
+
+			//2.创建请求
+			xhr.open('post','http://127.0.0.1:8080/pro/reg',true);
+			
+			//2.发送请求
+			xhr.send();
+		}
+	</script>
+-->
+		
+
+	<!-- 2-2.添加注册用户的方法 -->
+	<script>
+		function register(){
+			//dom操作获取数据
+			var u_uname=uname.value;
+			var u_pwd=upwd.value;
+			var c_pwd=cpwd.value;
+			var u_email=email.value;
+			var u_phone=phone.value;
+
+			//1.创建xhr异步对象
+			var xhr=new XMLHttpRequest();
+
+			//4.接收响应
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+				//提示修改结构
+					if(result==1&&u_pwd==c_pwd){
+						alert('注册成功');
+
+						//js的页面跳转 BOM
+						location.href='http://127.0.0.1:8080/01_login.html';
+					}else{alert('注册失败')}
+				}
+			}
+			//2.创建请求
+				xhr.open('post','http://127.0.0.1:8080/pro/reg',true);
+
+			//3.发送请求
+			//3.1设置请求头信息(post请求时 特殊字符&传输不过来)
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+			//3.2创建请求主体
+			var formdata="uname="+u_uname+"&upwd="+u_pwd+'&cpwd='+c_pwd+"&email="+u_email+"&phone="+u_phone;
+
+			xhr.send(formdata);
+		}
+		//在浏览器端访问 http://127.0.0.1:8080/05_register.html 
+	</script>
+
+ </body>
+</html>

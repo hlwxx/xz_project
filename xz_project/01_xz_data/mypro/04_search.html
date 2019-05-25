@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+ </head>
+ <body>
+	<input type="text" placeholder='请输入编号' id='uid'>
+	<button onclick='search()'>查询</button>
+	<div id='content'></div>
+	<script>
+		function search(){
+			//获取uid
+			var u_id=uid.value;
+
+			//1.获取异步对象
+			var xhr=new XMLHttpRequest();
+			
+			//4.接收响应数据
+			xhr.onreadystatechange=function(){
+				
+				if(xhr.readyState==4&&xhr.status==200){
+					
+					var result=xhr.responseText;
+					//console.log(result);
+
+					//把查询到的数据显示在浏览器
+					console.log(content.innerHTML=result);
+					
+				}
+			};
+			//2.创建请求
+			
+			xhr.open('get','http://127.0.0.1:8080/pro/search?uid='+u_id,true);
+
+			//3.发送请求
+			xhr.send();
+			//在浏览器端访问 http://127.0.0.1:8080/04_search.html
+		}
+	</script>
+
+
+
+ </body>
+</html>

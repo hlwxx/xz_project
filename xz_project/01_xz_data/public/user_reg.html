@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>user register</title>
+ </head>
+ <body>
+  <h2>用户注册</h2>
+<!--name要与数据库里面表的列名称一致  -->
+<!--参数为挂载的url为/user 表单请求的时候 url要写 /user/reg  -->
+  <form action='/user/reg' method='get'>
+	用户：<input type='text' name='uname'><br>
+	密码：<input type='text' name='upwd'><br>
+	手机：<input type='text' name='phone'><br>
+	邮箱：<input type='text' name='email'><br>
+	<input type='submit'>
+
+  </form>
+ </body>
+</html>

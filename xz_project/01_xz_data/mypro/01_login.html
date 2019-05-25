@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+ </head>
+ <body>
+		<input type="text" placeholder='请输入用户名' name='uname' id='uname'><br>
+	  <input type="password" placeholder='请输入密码' name='upwd' id='upwd'><br>
+	  <button onclick='login()'>登陆</button>
+
+		<script>
+			function login(){
+			//获取用户名、密码 使用dom获取两个input的value(用于后面接收数据后拼接)
+			var u_name=uname.value;
+			var u_pwd=upwd.value;
+
+			//1.创建异步对象
+			var xhr=new XMLHttpRequest();
+
+			//4.监听接收响应数据
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					alert(result);
+				}
+			}
+			
+			//2.打开连接，创建请求(/pro/login)
+			xhr.open('post',"http://127.0.0.1:8080/pro/login",true);
+
+			//3.发送请求
+			//3-1 创建设置主体
+			//post的参数是通过请求主体发送的 通过拼接form data接收请求主体的数据
+			var formdata='uname='+u_name+"&upwd="+u_pwd;
+			
+			//由于ajax默认传输的是text/plian无法传递特殊符号 
+			//3-2 需要改消息头 让ajax请求可以传递特殊符号
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+			xhr.send(formdata);
+			//在浏览器端访问 http://127.0.0.1:8080/01_login.html
+			}
+			
+			
+		</script>
+ </body>
+</html>

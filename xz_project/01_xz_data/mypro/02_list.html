@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+ </head>
+ <body onload='loadUser()'>
+ 	<table border='1px' width='1000px'>
+ 		<thead>
+			
+ 			<th>登录名称</th>
+ 			<th>电子邮箱</th>
+ 			<th>联系方式</th>
+ 			<th>用户姓名</th>
+ 			<th>用户性别</th>
+			<th>操作</th>
+ 		</thead>
+		<tbody id='content'></tbody>
+ 	</table>
+	
+	<script>
+	//2-1.加载用户的方法
+		function loadUser(){
+			//1.创建异步对象
+			var xhr=new XMLHttpRequest();
+
+			//4.监听获取响应
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					//console.log(result);按F12 显示json串
+					//json解析 把json字符串转换成js对象数组
+					var users=JSON.parse(result);
+					//dom操作 把数据放入表格
+					var html='';
+					console.log(users);//按F12 json串变成对象数组
+					//使用for循环 添加多组数据(使用模板字符串 使用+=)
+					for(var i=0;i<users.length;i++){
+						html+=`
+							<tr>
+								
+								<td>${users[i].uname}</td>
+								<td>${users[i].email}</td>
+								<td>${users[i].phone}</td>
+								<td>${users[i].user_name}</td>
+								`;
+
+								//转换gender的原先表现方式数字为中文
+								var gender='不详';
+								if(users[i].gender==1){
+									gender='男';
+								}else if(users[i].gender==0){
+									gender='女';
+								}else{
+									gender='不详';
+								}
+								html+=`<td>${gender}</td>
+								<td>
+									<a href='javascript:deleteUser(${users[i].uid})'>删除</a>
+									<a href="04_update.html?uid=${users[i].uid}">修改</a>
+								</td>
+							</tr>	
+						`;
+						//在浏览器端访问 http://127.0.0.1:8080/02_list.html 能显示所有数据
+					}
+					content.innerHTML=html;//把变量html赋给content.innerHTML
+				}
+			}
+
+			//2.打开连接，创建请求(路由器参数挂载的url为/pro)
+			xhr.open('get','http://127.0.0.1:8080/pro/list',true);
+
+			//3.发送请求
+			xhr.send();
+			//在浏览器端访问 http://127.0.0.1:8080/02_list.html
+			//数据每一条显示一行了
+		}
+	   //2-1.
+		//删除用户的方法(赋值03_delete.html)
+		//a标签的锚点
+		//当前行uid的获取
+		function deleteUser(u_id){
+			//获取uid
+			//var u_id=uid.value; //已经在方法中调用传参了
+			
+			//1.获取异步对象
+			var xhr=new XMLHttpRequest();
+
+			//4.接收响应数据
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					console.log(result);
+					if(result==1){
+						alert('删除成功');
+						//调用方法 重新加载页面(弹窗点确定后 不用手动刷新 数据就已经显示被删除后的了)
+						loadUser();
+					}else{
+						alert('删除失败');
+					}
+				}
+			}
+			//2.创建请求(字符串拼接)
+			xhr.open('get',"http://127.0.0.1:8080/pro/deleteUser?uid="+u_id,true);
+
+			//3.发送请求
+			xhr.send();
+			//在浏览器端访问 http://127.0.0.1:8080/03_delete.html
+		}
+
+	</script>
+	
+ </body>
+</html>
+
+
+	

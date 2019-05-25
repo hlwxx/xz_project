@@ -1,0 +1,150 @@
+<!--  -->
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+ </head>
+ <body onload='query()'>
+<!-- 
+<div>
+ 		<input type="text" id='c_uid'>
+		<button onclick='query()'>查询</button>
+ </div>
+ 	<p>
+-->
+ 
+		用户ID:<span id='uid'></span>
+	</p>
+	<p>
+		登录名称：<input type="text" id='uname'>
+	</p>
+	<p>
+		登录密码：<input type="text" id='upwd'>
+	</p>
+	<p>
+		登录邮箱：<input type="text" id='email'>
+	</p>
+	<p>
+		联系方式：<input type="text" id='phone'>
+	</p>
+	<p>
+		真实姓名：<input type="text" id='user_name'>
+	</p>
+	<p>
+<!-- 用户性别有多个值 需要用name来分组 -->
+		用户性别：
+		<input type="radio" name='gender' id='m' value='1'>
+		<!-- label用来关联文本与表单控件 属性for'' 里面放要关联的表单控件的id名-->
+		<label for='m'>男</label>
+		<input type="radio" name='gender' id='f' value='0'>
+		<label for='f'>女</label>
+		<input type="radio" name='gender' id='un' value='-1'>
+		<label for='un'>保密</label>
+	</p>
+
+	<button onclick='update()'>修改</button>
+
+	<script>
+   //2-1.添加查询用户信息的方法(先查询再修改)
+		function query(){
+			//获取uid
+			//var in_uid=c_uid.value;
+			//从当前url中获取uid
+			var urlParams=new URLSearchParams(location.search);
+			var in_uid=urlParams.get('uid');
+			//alert(in_uid);
+
+			//1.获取异步对象
+			var xhr=new XMLHttpRequest();
+			
+			//4.接收响应数据
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					//json解析
+					var user=JSON.parse(result);
+					console.log(user); //按F12显示数组
+					//把解析后的数据放入输入框中
+					uid.innerHTML=user.uid;
+					uname.value=user.uname;
+					upwd.value=user.upwd;
+					email.value=user.email;
+					phone.value=user.phone;
+					user_name.value=user.user_name;
+					
+					//获取性别
+					console.log(user.gender);
+					if(user.gender==1){
+						m.checked=true;
+					}else if(user.gender==0){
+						f.checked=true;
+					}else{
+						un.checked=true;
+					}
+				}
+			};
+			//2.创建请求
+			
+			xhr.open('get','http://127.0.0.1:8080/pro/query?uid='+in_uid,true);
+
+			//3.发送请求
+			xhr.send();
+			//在浏览器端访问 http://127.0.0.1:8080/04_update.html
+			//输入编号点查询后
+		}
+	</script>
+
+	<!-- 2-2.添加修改用户信息的方法 -->
+	<script>
+		function update(){
+			//获取所有的信息
+			var u_id=uid.innerHTML;
+			var u_name=uname.value;
+			var u_pwd=upwd.value;
+			var u_email=email.value;
+			var u_phone=phone.value;
+			var u_user_name=user_name.value;
+			var u_gender='1';
+			if(m.checked){
+				u_gender='1';
+			}else{
+				u_gender='0';
+			}
+			//1.创建xhr异步对象
+			var xhr=new XMLHttpRequest();
+			//4.接收响应
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					var result=xhr.responseText;
+					//1.提示修改结构
+					if(result==1){
+						alert('修改成功');
+						//js的页面跳转 BOM
+						location.href='http://127.0.0.1:8080/02_list.html';
+					}else{
+						alert('修改失败');
+					}
+				}
+			}	
+
+			//2.创建请求
+			xhr.open('post','http://127.0.0.1:8080/pro/update',true);
+			
+		//3.发送请求
+			//3.1设置请求头信息(post请求时 特殊字符&传输不过来)
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+			//3.2创建请求主体
+			var formdata='uid='+u_id+'&uname='+u_name+'&upwd='+u_pwd+'&email='+u_email+'&phone='+u_phone+'&user_name='+u_user_name+'&gender='+u_gender;
+			xhr.send(formdata);
+		}
+
+		//先访问 http://127.0.0.1:8080/02_list.html 
+		//修改数据后点修改按钮会弹出'修改成功' 点确定后然后跳转到修改后的表格列表页面
+	</script>
+
+
+
+ </body>
+</html>
