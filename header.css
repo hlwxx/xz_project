@@ -1,0 +1,8 @@
+.breadcrumb-item + .breadcrumb-item::before{
+    content:"|";
+}
+
+.breadcrumb{
+    background-color:transparent;
+}
+
