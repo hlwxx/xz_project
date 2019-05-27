@@ -1,0 +1,49 @@
+
+/*背景色*/
+.bg_gray{
+    background:linear-gradient(to bottom,#f0f0f0,#e0e0e0);
+    line-height:1.5rem;
+}
+
+.my_img_1{
+    width:1.25rem;
+}
+
+.my_input_width{
+    width:10%;
+    border:0;
+    outline:0;
+}
+/*标题鼠标悬停时去掉下划线*/
+a:hover{
+    text-decoration:none;
+}
+/*过渡*/
+.my_img_position{
+    transition:transform 1s;
+}
+/*转换(鼠标悬停时放大)*/
+.my_img_position:hover{
+    transform:scale(1.1);
+}
+
+.pagination>li.page-item{
+    margin-left:2px;
+    margin-right:2px;
+}
+
+.pagination>li.page-item>a{
+    border-radius:4px;
+}
+
+.my_input_width{
+    width:2rem;
+}
+
+.my_button_size{
+    height:2rem; width:1.5rem;padding:0;
+}
+
+.border-top{
+    border-top-style:dashed!important;
+}

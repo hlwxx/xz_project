@@ -1,0 +1,18 @@
+/*底部第二层的样式*/
+/*中屏及以下的样式*/
+@media screen and (max-width: 991px){
+    /* logo图及字体图 显示在中间*/
+    .bottom_left{padding-left:15rem;}
+    /* 3列列表 显示在中间*/
+    .bottom_center{padding-left:8rem;}
+    /*学子客户端图及二维码图 显示在中间*/
+    .bottom_right{padding-left:10rem;}
+}
+
+/*小屏及以下的样式*/
+@media screen and (max-width: 767px){
+    .bottom_left{padding-left:8rem;}
+    .bottom_center{padding-left:6rem;}
+    .bottom_right{padding-left:8rem;}
+}
+

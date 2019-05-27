@@ -1,0 +1,9 @@
+/*面包屑导航的样式 竖线*/
+.breadcrumb-item + .breadcrumb-item::before{
+    content:"|";
+}
+/*面包屑导航的样式 透明背景色*/
+.breadcrumb{
+    background-color:transparent;
+}
+

@@ -1,0 +1,31 @@
+/*面包屑导航的样式*/
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+
+.my_img_w{
+    width:28rem;
+}
+.my_img_w>ul>li>img{width:5.2rem;}
+
+.btn-outline-primary{
+    color:rgb(102,102,102);
+    background-color:transparent;
+    background-image:none;
+    border-color:rgb(102,102,102);
+}
+.btn-outline-primary:hover,.btn-outline-primary:focus{
+    color:#007bff!important;
+    border-color:#007bff;
+    background:transparent;
+}
+
+.my_input_w {
+    width:2rem;
+}
+.btn-secondary{
+    background-image:linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 100%);
+    border-color:#ddd;
+
+}
+
